@@ -8,6 +8,8 @@ export const UserProducts = ()=>{
         {id: 4, nombre: 'Jugo', cantidad: 1},
     ];
     return(
+        <>
+        <Navbar/>
         <div className="bg-white p-4 rounded shadow-md">
             <h1 className="text-2x1 font-semibold mb-4">Productos consumidos</h1>
             <ul>
@@ -21,5 +23,6 @@ export const UserProducts = ()=>{
                 ) )}
             </ul>
         </div>
+        </>
     )
 }
