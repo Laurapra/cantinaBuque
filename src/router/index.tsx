@@ -1,4 +1,5 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
+import { HomePage } from "../pages/Home";
 
 export const appRouter = createBrowserRouter([
   {
@@ -7,7 +8,7 @@ export const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <>Inicio</>
+        element: <HomePage/>
       },
       {
         path: "/mis-pedidos",
