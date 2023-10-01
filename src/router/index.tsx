@@ -1,5 +1,6 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
 import { HomePage } from "../pages/Home";
+import { UserProducts } from "../pages/UserProducts";
 
 export const appRouter = createBrowserRouter([
   {
@@ -12,7 +13,7 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "/mis-pedidos",
-        element: <>Mis pedidos</>
+        element: <UserProducts/>
       },
       {
         path: "/todos-los-pedidos",
