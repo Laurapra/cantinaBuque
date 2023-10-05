@@ -1,8 +1,10 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
 import { HomePage } from "../pages/Home";
 import { UserProducts } from "../pages/UserProducts";
+import { ShoppingCart } from "../pages/ShoppingCart"
 import { AuthPage } from "../pages/Auth";
 import { AuthLayout, PrincipalLayout } from "../Layout";
+import { AvailableProducst } from "../pages/AvailableProducts";
 
 export const appRouter = createBrowserRouter([
   {
@@ -18,16 +20,16 @@ export const appRouter = createBrowserRouter([
             element: <HomePage/>
           },
           {
-            path: "/mis-pedidos",
+            path: "/availableProducts",
+            element: <AvailableProducst/>
+          },
+          {
+            path: "/bills",
             element: <UserProducts/>
           },
           {
-            path: "/todos-los-pedidos",
-            element: <>Todos los pedidos</>
-          },
-          {
             path: "/ventas",
-            element: <>Ventas</>
+            element: <ShoppingCart/>
           }
         ]
       }

@@ -1,4 +1,4 @@
-import { Navbar } from "../components/navbar";
+import { Navbar } from "../components/Navbar";
 import { useState, useEffect } from 'react';
 import { IAllProductsResponse } from "../interfaces/api.interfaces";
 import { strapiApi } from "../domain/general.api";
@@ -20,7 +20,7 @@ export const UserProducts = () => {
 
     useEffect(() => {
         getProducts()
-
+        
         /**
          * Cuando vayas a usar la pagina para listar las compras hechas (Facturas)
          * esta seria el endpoint http://localhost:1337/api/bills?populate=*

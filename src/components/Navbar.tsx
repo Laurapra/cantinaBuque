@@ -19,12 +19,12 @@ export const Navbar = () => {
         <nav className='bg-indigo-200 py-4 px-2 flex justify-between items-center'>
             <ul className='flex space-x-4'>
                 <li>
-                    <Link to= "/mis-pedidos" className='text-black flex items-center'>
+                    <Link to= "/availableProducts" className='text-black flex items-center'>
                     <FaShoppingCart className="mr-2"/> Productos
                     </Link>
                 </li>
                 <li>
-                    <Link to= "/todos-los-pedidos" className='text-black flex items-center'>
+                    <Link to= "/bills" className='text-black flex items-center'>
                     <FaFileInvoiceDollar className="mr-2"/> Facturas
                     </Link>
                 </li>
