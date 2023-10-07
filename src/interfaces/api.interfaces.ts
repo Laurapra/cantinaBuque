@@ -64,7 +64,7 @@ export interface PurpleAttributes {
   updatedAt:    Date;
   publishedAt:  Date;
   products:     Products;
-  identification: number
+  docNumber: number
 }
 
 export interface Products {
