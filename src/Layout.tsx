@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import { useEffect } from "react"
 import { checkUser } from "./store/general.actions"
 import { useShallowGeneralStore } from "./store/general.store"
-import { Navbar } from "./components/navbar"
+import { Navbar } from "./components/Navbar"
 
 
 export const AuthLayout = () => {

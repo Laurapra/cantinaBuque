@@ -1,31 +1,61 @@
 import create from 'zustand';
 
 interface Product {
-    name: string;
+  id: number;
+  attributes: {
+    title: string;
     price: number;
-}
-//defino el estado del carrito
-interface CartState{
-    items: Product[];
-}
-//def las acciones disponibles para el carrito
-interface CarActions{
-    addToCart: (product: Product)=> void;
-    removeFromCart: (product: Product)=> void;
-    clearCart: ()=> void;
+  };
+  quantity: number;
 }
 
-export const useCarStore= create<CartState & CarActions>((set) => ({
-    items: [],
-    addToCart: (product) => {
-        set((state) => ({items: [...state.items, product] }));
-    },
-    removeFromCart: (product) => {
-        set((state) =>  ({
-            items: state.items.filter((cartProduct) => cartProduct != product),
-        }));
-    },
-    clearCart: () => {
-        set({ items: [] });
-    },
+interface CartState {
+  items: Product[]; 
+}
+
+interface CartActions {
+  addToCart: (product: Product) => void;
+  removeFromCart: (product: Product) => void;
+  clearCart: () => void;
+  increaseQuantity: (product: Product) => void;
+  decreaseQuantity: (product: Product) => void;
+} 
+
+export const useCartStore = create<CartState & CartActions>((set) => ({
+  items: [], 
+  addToCart: (product) => {
+    set((state) => ({
+      ...state,
+      items: [...state.items, { ...product, quantity: 0}],
+    }));
+  },
+  removeFromCart: (product) => {
+    set((state) => ({
+      ...state,
+      items: state.items.filter((cartProduct) => cartProduct.id !== product.id),
+    }));
+  },
+  clearCart: () => {
+    set({ items: [] });
+  },
+  increaseQuantity: (product) => {
+    set((state) => ({
+      ...state,
+      items: state.items.map((cartProduct) =>
+        cartProduct.id === product.id
+          ? { ...cartProduct, quantity: cartProduct.quantity + 1 }
+          : cartProduct
+      ),
+    }));
+  },
+  decreaseQuantity: (product) => {
+    set((state) => ({
+      ...state,
+      items: state.items.map((cartProduct) =>
+        cartProduct.id === product.id && cartProduct.quantity > 1
+          ? { ...cartProduct, quantity: cartProduct.quantity - 1 }
+          : cartProduct
+      ),
+    }));
+  },
 }));
