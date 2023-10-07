@@ -190,7 +190,8 @@ export const ShoppingCart = () => {
             </button>
             <span>Total: ${calculateTotal()}</span>
           </div>
-          <button onClick={() => navigate("/addProduct")}>Ingresar nuevos productos</button>
+          <button onClick={() => navigate("/addProduct")}
+          className="bg-indigo-500 text-white rounded-md px-4 py-2 mr-4">Ingresar nuevos productos</button>
         </div>
       </div>
     </>
