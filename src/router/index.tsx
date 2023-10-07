@@ -5,6 +5,7 @@ import { ShoppingCart } from "../pages/ShoppingCart"
 import { AuthPage } from "../pages/Auth";
 import { AuthLayout, PrincipalLayout } from "../Layout";
 import { AvailableProducst } from "../pages/AvailableProducts";
+import { AddProductPage } from "../pages/AddProductPage";
 
 export const appRouter = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ export const appRouter = createBrowserRouter([
           {
             path: "ventas",
             element: <ShoppingCart/>
+          },
+          {
+            path: "/addProduct",
+            element: <AddProductPage/>
           }
         ]
       }
