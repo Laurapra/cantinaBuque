@@ -1,6 +1,6 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
 import { HomePage } from "../pages/Home";
-import { UserProducts } from "../pages/UserProducts";
+import { BillByIdPage, UserProducts } from "../pages/UserProducts";
 import { ShoppingCart } from "../pages/ShoppingCart"
 import { AuthPage } from "../pages/Auth";
 import { AuthLayout, PrincipalLayout } from "../Layout";
@@ -12,23 +12,32 @@ export const appRouter = createBrowserRouter([
     element: <AuthLayout />,
     children: [
       {
-        path: "/",
+        path: "",
         element: <PrincipalLayout />,
         children: [
           {
             path: "/",
             element: <HomePage/>
           },
+          
           {
-            path: "/availableProducts",
+              
+            path: "bills",
+            element: <UserProducts/>,
+            children: [
+              {
+                path: ":id",
+                element: <BillByIdPage />
+              }
+            ],
+          },
+          {
+            path: "availableProducts",
             element: <AvailableProducst/>
           },
+          
           {
-            path: "/bills",
-            element: <UserProducts/>
-          },
-          {
-            path: "/ventas",
+            path: "ventas",
             element: <ShoppingCart/>
           }
         ]

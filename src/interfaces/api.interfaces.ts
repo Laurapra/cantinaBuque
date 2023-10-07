@@ -43,3 +43,47 @@ export interface Pagination {
   pageCount: number;
   total:     number;
 }
+
+
+export interface IAllBill {
+  data: IAllBillDatum[];
+  meta: Meta;
+}
+
+export interface IAllBillDatum {
+  id:         number;
+  attributes: PurpleAttributes;
+}
+
+export interface PurpleAttributes {
+  purchaseDate: Date;
+  TotalBill:    number;
+  Client:       string;
+  billSlug:     string;
+  createdAt:    Date;
+  updatedAt:    Date;
+  publishedAt:  Date;
+  products:     Products;
+  identification: number
+}
+
+export interface Products {
+  data: ProductsDatum[];
+}
+
+export interface ProductsDatum {
+  id:         number;
+  attributes: FluffyAttributes;
+}
+
+export interface FluffyAttributes {
+  title:       string;
+  price:       number;
+  createdAt:   Date;
+  updatedAt:   Date;
+  publishedAt: Date;
+}
+
+export interface Meta {
+  pagination: Pagination;
+}

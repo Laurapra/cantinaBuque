@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaFileInvoiceDollar, FaCashRegister } from 'react-icons/fa';
 import { useShallowGeneralStore } from '../store/general.store';
 import { logout } from '../store/general.actions';
+
 export const Navbar = () => {
     const [userInfo] = useShallowGeneralStore((state) => ([state.userInfo]))
     const navigate = useNavigate()
