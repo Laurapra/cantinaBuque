@@ -4,6 +4,7 @@ import { useCartStore } from "../interfaces/carStore";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { InputText } from "primereact/inputtext";
+import { useShallowGeneralStore } from "../store/general.store";
 
 interface Product {
   id: number;
@@ -23,6 +24,7 @@ interface Invoice {
 
 export const ShoppingCart = () => {
   const [products, setProducts] = useState<Product[]>([]);
+
   const cartItems = useCartStore((state) => state.items);
   const addToCart = useCartStore((state) => state.addToCart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);

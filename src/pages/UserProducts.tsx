@@ -4,6 +4,7 @@ import { Data, IAllBill, IAllBillDatum, IAllProductsResponse, IBillData, Product
 import { strapiApi } from "../domain/general.api";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
+import { AllBillsByDocNumber, Attributes, Datum } from "../interfaces/bills.interfaces";
 
 export const UserProducts = () => {
     // const [products, setProducts] = useState<IAllProductsResponse>()
@@ -86,6 +87,8 @@ export const BillByIdPage = () => {
     const { id } = useParams()
     const [loading, setLoading] = useState(false)
     const [bill, setBill] = useState<IBillData>()
+    const [billsByDocNumber, setBillsByDocNumber] = useState<AllBillsByDocNumber>()
+    const [page, setPage] = useState(1)
     const navigate = useNavigate()
 
     const getBill = async () => {
@@ -100,9 +103,48 @@ export const BillByIdPage = () => {
         }
         setLoading(false)
     }
+
+    const getData = async() => {
+        await getBill()
+        await getBillsByDocNumber()
+    }
+
+    const getBillsByDocNumber = async () => {
+        setLoading(true)
+        try {
+            const { data } = await strapiApi.get<AllBillsByDocNumber>(`bills?filters[docNumber][$eq]=${bill?.data.attributes.docNumber}&pagination[page]=${page}&pagination[pageSize]=5`)
+            // console.log('data', data)
+
+            setBillsByDocNumber(data)
+        } catch (error) {
+            console.log('error', error)
+        }
+        setLoading(false)
+    }
+
     useEffect(() => {
         getBill()
+        // getBillsByDocNumber()
+
+        // getData()
     }, [id])
+
+    useEffect(() => {
+        getBillsByDocNumber()
+    }, [bill, page])
+
+    const totalBillReducer = (accumulator: number, currentValue: Datum) => accumulator + (currentValue?.attributes?.TotalBill ?? 0);
+    const totalAmount = billsByDocNumber?.data.reduce(totalBillReducer, 0);
+
+    const nextPage = () => {
+        if(billsByDocNumber?.meta.pagination.pageCount == page) return
+        setPage(page + 1)
+    }
+
+    const prevPage = () => {
+        if(page == 1) return
+        setPage(page - 1)
+    }
 
     if (loading) return <></>
 
@@ -113,9 +155,30 @@ export const BillByIdPage = () => {
             </button>
 
             <Invoice data={bill?.data!} />
+
+            <div className="w-11/12 mx-auto my-5 shadow-md p-4 rounded-md">
+                <h3>Todas las compras de: {bill?.data.attributes.docNumber}</h3>
+                <p>Valor total en compras: ${ totalAmount }</p>
+            </div>
+
+            <div className="w-fit mx-auto my-5 shadow-md p-4 rounded-md flex gap-5">
+                <button onClick={prevPage}>Anterior</button>
+                <p>Pagina actual: {page}</p>
+                <button onClick={nextPage}>Siguiente</button>
+            </div>
+
+            <div className="grid gap-5 px-5 my-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                {
+                    billsByDocNumber?.data?.map((bill) => (
+                        <Invoice key={bill.id} data={bill as DataInvoice} /> 
+                    ))
+                }
+            </div>
         </>
     )
 }
+
+
 
 export interface DataInvoice {
     id: number;
