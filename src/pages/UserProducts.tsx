@@ -52,16 +52,6 @@ export const UserProducts = () => {
             <div className="bg-white p-4 rounded shadow-md">
                 <h1 className="text-2x1 font-semibold mb-4">Clientes</h1>
                 <InputText onChange={onChangeFilter} className="mb-5" keyfilter="int" placeholder="Buscar por cedula" />
-                {/* <ul>
-                    {
-                        products?.data?.map((product) => (
-                            <li key={product.id} className="flex justify-between items-center border-b border-gray-300 py-2">
-                                <p className="text-lg">{product.attributes.title}</p>
-                                <p className="text-sm text-gray-500">Precio: {product.attributes.price}</p>
-                            </li>
-                        ))
-                    }
-                </ul> */}
 
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -71,13 +61,14 @@ export const UserProducts = () => {
                             return (
                                 <div key={bill.id} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100">
                                     {/* <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="" alt="" /> */}
-                                    <div className="flex flex-col justify-between p-4 leading-normal">
+                                    <div className="flex flex-col justify-between items-start p-4 leading-normal">
                                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{bill.attributes.Client}</h5>
-                                        <p className="mb-3 font-normal text-gray-700">$ {bill.attributes.TotalBill}</p>
+                                        <p className="mb-3 font-normal text-gray-700">Total: $ {bill.attributes.TotalBill}</p>
                                         <p className="mb-3 font-normal text-gray-700">Cedula: {bill.attributes.docNumber} </p>
+                                        <button onClick={() => navigate(`/bills/${bill.id}`)}>Ver compra</button>
                                     </div>
 
-                                    <button onClick={() => navigate(`/bills/${bill.id}`)}>Ver compras realizadas</button>
+                                    
                                 </div>
                             )
                         })
@@ -141,6 +132,11 @@ export interface DataAttributes {
     publishedAt: Date;
     docNumber: number;
     products: Products;
+    productsToBuy: {
+        product: string,
+        price: number,
+        quantity: number
+      }[],
 }
 
 const Invoice = ({ data }: { data: DataInvoice }) => {
@@ -159,9 +155,9 @@ const Invoice = ({ data }: { data: DataInvoice }) => {
             <div className="mb-4">
                 <strong>Productos:</strong>
                 <ul>
-                    {data?.attributes?.products.data.map((product) => (
-                        <li key={product.id}>
-                            {product.attributes.title} - ${product.attributes.price}
+                    {data?.attributes?.productsToBuy?.map((product) => (
+                        <li key={product.product}>
+                            {product.product} {product?.quantity} - ${product.price}
                         </li>
                     ))}
                 </ul>

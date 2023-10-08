@@ -30,7 +30,9 @@ export const ShoppingCart = () => {
   const increaseQuantity = useCartStore((state) => state.increaseQuantity);
   const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);
 
+  // console.log('cartItems', cartItems)
   const [client, setClient] = useState("")
+  const [clientName, setClientName] = useState("")
 
   const navigate = useNavigate();
 
@@ -86,21 +88,13 @@ export const ShoppingCart = () => {
       const invoiceData = {
         purchaseDate: todaysDate,
         TotalBill: totalBill,
-        Client: client,
-        billSlug: `bill-${client}-1-2`,
+        Client: clientName,
         docNumber: +client,
-        productsToBuy: [
-          {
-            product: "Coca-Cola",
-            price: 2500,
-            quantity: 2
-          },
-          {
-            product: "Pepsi-Cola",
-            price: 3000,
-            quantity: 10
-          },
-        ]
+        productsToBuy: cartItems.map((item) => ({
+          product: item.attributes.title,
+          price: item.attributes.price,
+          quantity: item.quantity
+        }))
       };
 
       const response = await fetch("http://localhost:1337/api/bills", {
@@ -115,6 +109,8 @@ export const ShoppingCart = () => {
       if (response.ok) {
         // La factura se creó con éxito
         console.log("Factura creada con éxito");
+        clearCart()
+        navigate("/bills")
       } else {
         console.error("Error al crear la factura");
       }
@@ -127,6 +123,10 @@ export const ShoppingCart = () => {
     setClient(event.target.value)
 }
 
+const onChangeClientName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  setClientName(event.target.value)
+}
+
   return (
     <>
       <div className="min-h-screen bg-gray-100 py-6 px-4 sm:px-6 lg:px-8">
@@ -136,6 +136,7 @@ export const ShoppingCart = () => {
             <h2 className="text-xl font-semibold mb-2">Productos disponibles:</h2>
 
             <InputText onChange={onChangeClient} className="mb-5" keyfilter="int" placeholder="Cedula del cliente" />
+            <InputText onChange={onChangeClientName} className="mb-5" placeholder="Nombre del cliente" />
             <ul>
               {products.map((product) => (
                 <li
@@ -147,7 +148,7 @@ export const ShoppingCart = () => {
                   <button
                     onClick={() => {
                       addToCart({ ...product, quantity: 1 });
-                      increaseProductQuantity(product);
+                      // increaseProductQuantity(product);
                     }}
                     className="bg-blue-500 text-white rounded-md px-4 py-2 ml-2"
                   >
@@ -179,7 +180,7 @@ export const ShoppingCart = () => {
                     <span className="mx-2">{item.quantity}</span>
                     <button
                       onClick={() => {
-                        addToCart(item);
+                        // addToCart(item);
                         increaseProductQuantity(item);
                       }}
                       className="text-green-500"

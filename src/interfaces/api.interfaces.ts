@@ -109,6 +109,11 @@ export interface DataAttributes {
   publishedAt:  Date;
   docNumber:    number;
   products:     Products;
+  productsToBuy: {
+    product: string,
+    price: number,
+    quantity: number
+  }[],
 }
 
 export interface Products {

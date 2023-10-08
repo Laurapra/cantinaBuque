@@ -21,9 +21,15 @@ interface CartActions {
   decreaseQuantity: (product: Product) => void;
 } 
 
-export const useCartStore = create<CartState & CartActions>((set) => ({
+export const useCartStore = create<CartState & CartActions>((set, get) => ({
   items: [], 
   addToCart: (product) => {
+    const productsCar = get().items
+
+    const hasPreviousItem = productsCar.find((item) => item.id === product.id)
+
+    if(hasPreviousItem) return
+
     set((state) => ({
       ...state,
       items: [...state.items, { ...product, quantity: 0}],
@@ -39,6 +45,7 @@ export const useCartStore = create<CartState & CartActions>((set) => ({
     set({ items: [] });
   },
   increaseQuantity: (product) => {
+
     set((state) => ({
       ...state,
       items: state.items.map((cartProduct) =>
