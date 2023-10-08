@@ -13,24 +13,27 @@ export const appRouter = createBrowserRouter([
     element: <AuthLayout />,
     children: [
       {
-        path: "",
+        path: "/auth",
+        element: <AuthPage />
+      },
+      {
+        path: "/",
         element: <PrincipalLayout />,
         children: [
           {
             path: "/",
             element: <HomePage/>
           },
-          
           {
-              
             path: "bills",
-            element: <UserProducts/>,
-            children: [
-              {
-                path: ":id",
-                element: <BillByIdPage />
-              }
-            ],
+            index: true,
+            element: <UserProducts/>
+          },
+          {
+            path: "bills/:id",
+            element: <BillByIdPage />,
+            errorElement: <></>,
+            ErrorBoundary: null
           },
           {
             path: "availableProducts",
@@ -42,15 +45,12 @@ export const appRouter = createBrowserRouter([
             element: <ShoppingCart/>
           },
           {
-            path: "/addProduct",
+            path: "addProduct",
             element: <AddProductPage/>
           }
         ]
       }
     ]
   },
-  {
-    path: "/auth",
-    element: <AuthPage />
-  },
+  
 ])

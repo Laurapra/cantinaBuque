@@ -17,7 +17,6 @@ export const loginUser = async (data: { identifier: string; password: string }) 
 
     // Cookies.set(import.meta.env.USER_TOKEN, res.jwt)
     Cookies.set("USER_TOKEN", res.jwt)
-    Cookies.set("USER_TOKEN", res.jwt)
 
     return true
   } catch (error) {

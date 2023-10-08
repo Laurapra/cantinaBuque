@@ -87,3 +87,46 @@ export interface FluffyAttributes {
 export interface Meta {
   pagination: Pagination;
 }
+
+
+export interface IBillData {
+  data: Data;
+  meta: Meta;
+}
+
+export interface Data {
+  id:         number;
+  attributes: DataAttributes;
+}
+
+export interface DataAttributes {
+  purchaseDate: Date;
+  TotalBill:    number;
+  Client:       string;
+  billSlug:     string;
+  createdAt:    Date;
+  updatedAt:    Date;
+  publishedAt:  Date;
+  docNumber:    number;
+  products:     Products;
+}
+
+export interface Products {
+  data: Datum[];
+}
+
+export interface Datum {
+  id:         number;
+  attributes: DatumAttributes;
+}
+
+export interface DatumAttributes {
+  title:       string;
+  price:       number;
+  createdAt:   Date;
+  updatedAt:   Date;
+  publishedAt: Date;
+}
+
+export interface Meta {
+}

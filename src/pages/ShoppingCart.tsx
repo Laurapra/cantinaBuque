@@ -3,6 +3,7 @@ import { Navbar } from "../components/Navbar";
 import { useCartStore } from "../interfaces/carStore";
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import { InputText } from "primereact/inputtext";
 
 interface Product {
   id: number;
@@ -28,6 +29,8 @@ export const ShoppingCart = () => {
   const clearCart = useCartStore((state) => state.clearCart);
   const increaseQuantity = useCartStore((state) => state.increaseQuantity);
   const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);
+
+  const [client, setClient] = useState("")
 
   const navigate = useNavigate();
 
@@ -77,13 +80,27 @@ export const ShoppingCart = () => {
   const createInvoice = async () => {
     try {
       const totalBill = calculateTotal();
-      const client = "1"; 
+      // const client = "1"; 
+      const todaysDate = new Date().toISOString()
 
-      const invoiceData: Invoice = {
-        purchaseDate: new Date().toISOString(),
+      const invoiceData = {
+        purchaseDate: todaysDate,
         TotalBill: totalBill,
         Client: client,
-        billSlug: `billPruebaTexto`,
+        billSlug: `bill-${client}-1-2`,
+        docNumber: +client,
+        productsToBuy: [
+          {
+            product: "Coca-Cola",
+            price: 2500,
+            quantity: 2
+          },
+          {
+            product: "Pepsi-Cola",
+            price: 3000,
+            quantity: 10
+          },
+        ]
       };
 
       const response = await fetch("http://localhost:1337/api/bills", {
@@ -106,14 +123,19 @@ export const ShoppingCart = () => {
     }
   };
 
+  const onChangeClient = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setClient(event.target.value)
+}
+
   return (
     <>
-      <Navbar />
       <div className="min-h-screen bg-gray-100 py-6 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-semibold mb-6">Carrito de Compra</h1>
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">Productos disponibles:</h2>
+
+            <InputText onChange={onChangeClient} className="mb-5" keyfilter="int" placeholder="Cedula del cliente" />
             <ul>
               {products.map((product) => (
                 <li

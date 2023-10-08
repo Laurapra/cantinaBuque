@@ -31,7 +31,6 @@ export const AvailableProducst = () => {
     }, [apiUrl]);
     return (
         <>
-        <Navbar/>
         <div className="bg-white p-4 rounded shadow-md">
             <h1 className="text-2x1 font-semibold mb-4">Stock de productos disponibles:</h1>
             <ul>

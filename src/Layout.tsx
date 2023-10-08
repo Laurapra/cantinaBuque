@@ -13,22 +13,24 @@ export const AuthLayout = () => {
   const location = useLocation()
 
   useEffect(() => {
-    if(jwt) {
+    if (jwt) {
       checkUser(jwt)
     }
   }, [jwt])
 
-  if(location.pathname == "/ventas" && !isLogged) return <Navigate to={"/"} />  
+  if (location.pathname == "/ventas" && !isLogged) return <Navigate to={"/"} />
 
   return (
-    <Outlet/>
+    <Outlet />
   )
 }
 
 export const PrincipalLayout = () => {
-  
+
   return (
     <>
+      <Navbar />
+
       <Outlet />
     </>
   )

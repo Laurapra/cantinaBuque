@@ -43,7 +43,6 @@ export const AddProductPage = () => {
 
   return (
     <>
-      <Navbar />
       <div className="min-h-screen flex items-center justify-center">
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <h2 className="text-2xl font-semibold mb-4">Ingresar Producto</h2>
